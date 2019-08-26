@@ -4,8 +4,26 @@
   "description": "Sorting algorithm visualisation tool, bit of CS fun",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server --mode=development"
   },
   "author": "Eoin O'Toole",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "styled-components": "^4.3.2",
+    "styled-normalize": "^8.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.2",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/styled-components": "^4.1.18",
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.19.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
+  }
 }
