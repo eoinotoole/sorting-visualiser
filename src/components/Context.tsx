@@ -35,32 +35,24 @@ class Provider extends React.Component<ProviderProps, ProviderState> {
       arr[random] = temp;
     }
     this.setState({ currentArray: arr });
-    setTimeout(() => {
-      this.bubbleSort(this.state.currentArray);
-    }, 2000);
   }
 
-  async bubbleSort(list: number[]) {
+  async bubbleSort() {
+    const { currentArray } = this.state;
     const loop = async () => {
       let loop_again = false;
-      for (let i = 0; i < list.length; i++) {
-        console.log("loop");
-
+      for (let i = 0; i < currentArray.length; i++) {
         await delay(3);
-        if (!list[i + 1]) break;
-        if (list[i + 1] < list[i]) {
-          const temp = list[i];
-          list[i] = list[i + 1];
-          list[i + 1] = temp;
+        if (!currentArray[i + 1]) break;
+        if (currentArray[i + 1] < currentArray[i]) {
+          const temp = currentArray[i];
+          currentArray[i] = currentArray[i + 1];
+          currentArray[i + 1] = temp;
           loop_again = true;
-          this.setState({ currentArray: list });
+          this.setState({ currentArray: currentArray });
         }
       }
-      if (loop_again) {
-        loop();
-      } else {
-        console.log("done");
-      }
+      if (loop_again) loop();
     };
 
     await loop();

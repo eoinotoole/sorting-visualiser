@@ -5,10 +5,17 @@ import { themeVariable } from "./style/helpers";
 interface ButtonProps {
   text: string;
   colour: string;
+  onClick: any;
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({ text, colour }) => (
-  <Btn colour={colour}>{text}</Btn>
+const Button: React.FunctionComponent<ButtonProps> = ({
+  text,
+  colour,
+  onClick
+}) => (
+  <Btn colour={colour} onClick={onClick}>
+    {text}
+  </Btn>
 );
 
 export default Button;

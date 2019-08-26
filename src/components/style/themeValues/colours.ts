@@ -3,5 +3,6 @@ export default {
   magenta: "#E00059",
   background: "#FAFAFA",
   light_grey: "#C3C3CF",
-  body_colour: "#222222"
+  body_colour: "#222222",
+  dark_indigo: "#272a44"
 };

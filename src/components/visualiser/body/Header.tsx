@@ -1,21 +1,26 @@
 import * as React from "react";
 import styled from "styled-components";
 
+import { Context } from "../../Context";
 import { themeVariable } from "../../style/helpers";
 import Button from "../../Button";
 
 const Header: React.FunctionComponent = () => (
-  <Heady>
-    <WordMark>Algorithm Visualiser</WordMark>
-    <Container>
-      <Algorithm>
-        <span>Bubble Sort</span>
-      </Algorithm>
-      <Buttons>
-        <Button text="Sort" colour="magenta" />
-      </Buttons>
-    </Container>
-  </Heady>
+  <Context.Consumer>
+    {(context: any) => (
+      <Heady>
+        <WordMark>Algorithm Visualiser</WordMark>
+        <Container>
+          <Algorithm>
+            <span>Bubble Sort</span>
+          </Algorithm>
+          <Buttons>
+            <Button text="Sort" colour="magenta" onClick={context.bubbleSort} />
+          </Buttons>
+        </Container>
+      </Heady>
+    )}
+  </Context.Consumer>
 );
 
 export default Header;

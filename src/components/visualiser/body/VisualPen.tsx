@@ -1,13 +1,13 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Context, ProviderState } from "../../Context";
+import { Context } from "../../Context";
 
 class VisualPen extends React.Component {
   render() {
     return (
       <Context.Consumer>
-        {(context: ProviderState) => {
+        {(context: any) => {
           if (!context.currentArray.length) return null;
           return (
             <Pen>
@@ -33,7 +33,7 @@ interface ColProps {
 const Pen = styled.div``;
 const Data = styled.div`
   display: flex;
-  height: 38rem;
+  height: 40rem;
 `;
 const Col = styled.div<ColProps>`
   flex-grow: 1;
