@@ -1,0 +1,11 @@
+{
+  "name": "sorting-visualiser",
+  "version": "1.0.0",
+  "description": "Sorting algorithm visualisation tool, bit of CS fun",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eoin O'Toole",
+  "license": "ISC"
+}
