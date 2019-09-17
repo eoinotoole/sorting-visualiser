@@ -1,24 +1,31 @@
 import * as React from "react";
 
-import { delay } from "./visualiser/helpers";
+import Algorithms from "./Algorithms";
 
 const Context = React.createContext({});
 
-interface ProviderProps {
+export interface ProviderProps {
   children: any;
 }
 export interface ProviderState {
   currentArray: number[] | [];
+  currentAlgorithm: Algorithm;
+}
+export enum Algorithm {
+  Bubble = "BUBBLE",
+  Merge = "MERGE"
 }
 
-class Provider extends React.Component<ProviderProps, ProviderState> {
+class Provider extends Algorithms {
   constructor(props: ProviderProps) {
     super(props);
     this.state = {
-      currentArray: []
+      currentArray: [],
+      currentAlgorithm: Algorithm.Bubble
     };
     this.generateArray = this.generateArray.bind(this);
-    this.bubbleSort = this.bubbleSort.bind(this);
+    this.setAlgorithm = this.setAlgorithm.bind(this);
+    this.runAlgorithm = this.runAlgorithm.bind(this);
   }
 
   componentDidMount() {
@@ -37,25 +44,32 @@ class Provider extends React.Component<ProviderProps, ProviderState> {
     this.setState({ currentArray: arr });
   }
 
-  async bubbleSort() {
-    const { currentArray } = this.state;
-    const loop = async () => {
-      let loop_again = false;
-      for (let i = 0; i < currentArray.length; i++) {
-        await delay(3);
-        if (!currentArray[i + 1]) break;
-        if (currentArray[i + 1] < currentArray[i]) {
-          const temp = currentArray[i];
-          currentArray[i] = currentArray[i + 1];
-          currentArray[i + 1] = temp;
-          loop_again = true;
-          this.setState({ currentArray: currentArray });
-        }
-      }
-      if (loop_again) loop();
-    };
+  setAlgorithm(algorithm: Algorithm) {
+    switch (algorithm) {
+      case Algorithm.Bubble:
+        this.setState({ currentAlgorithm: Algorithm.Bubble });
+        return;
+      case Algorithm.Merge:
+        this.setState({ currentAlgorithm: Algorithm.Merge });
+        return;
+      default:
+        this.setState({ currentAlgorithm: Algorithm.Bubble });
+        return;
+    }
+  }
 
-    await loop();
+  runAlgorithm() {
+    switch (this.state.currentAlgorithm) {
+      case Algorithm.Bubble:
+        this.bubbleSort(this.state.currentArray);
+        return;
+      case Algorithm.Merge:
+        // this.bubbleSort(this.state.currentArray);
+        return;
+      default:
+        this.bubbleSort(this.state.currentArray);
+        return;
+    }
   }
 
   render() {
@@ -66,7 +80,7 @@ class Provider extends React.Component<ProviderProps, ProviderState> {
       <Context.Provider
         value={{
           currentArray,
-          bubbleSort: this.bubbleSort
+          runAlgorithm: this.runAlgorithm
         }}
       >
         {children}

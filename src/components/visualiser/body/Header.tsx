@@ -1,9 +1,20 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Context } from "../../Context";
+import { Context, Algorithm } from "../../Context";
 import { themeVariable } from "../../style/helpers";
 import Button from "../../Button";
+
+const generateAlgrorithmText = (algorithm: Algorithm) => {
+  switch (algorithm) {
+    case Algorithm.Bubble:
+      return "Bubble Sort";
+    case Algorithm.Merge:
+      return "Merge Sort";
+    default:
+      return "Bubble Sort";
+  }
+};
 
 const Header: React.FunctionComponent = () => (
   <Context.Consumer>
@@ -11,11 +22,15 @@ const Header: React.FunctionComponent = () => (
       <Heady>
         <WordMark>Algorithm Visualiser</WordMark>
         <Container>
-          <Algorithm>
-            <span>Bubble Sort</span>
-          </Algorithm>
+          <AlgorithmTitle>
+            <span>{generateAlgrorithmText(context.algorithm)}</span>
+          </AlgorithmTitle>
           <Buttons>
-            <Button text="Sort" colour="magenta" onClick={context.bubbleSort} />
+            <Button
+              text="Sort"
+              colour="magenta"
+              onClick={context.runAlgorithm}
+            />
           </Buttons>
         </Container>
       </Heady>
@@ -44,7 +59,7 @@ const Container = styled.div`
   flex-shrink: 0;
   flex-grow: 1;
 `;
-const Algorithm = styled.div`
+const AlgorithmTitle = styled.div`
   padding: 0 var(--space-lg);
   span {
     font-size: var(--text-md);
