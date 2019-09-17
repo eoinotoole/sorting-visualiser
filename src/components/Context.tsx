@@ -13,7 +13,15 @@ export interface ProviderState {
 }
 export enum Algorithm {
   Bubble = "BUBBLE",
-  Merge = "MERGE"
+  Merge = "MERGE",
+  Quick = "QUICK",
+  Heap = "HEAP"
+}
+export interface ContextStore {
+  currentArray: number[] | [];
+  currentAlgorithm: Algorithm;
+  setAlgorithm: (algorithm: Algorithm) => void;
+  runAlgorithm: () => void;
 }
 
 class Provider extends Algorithms {
@@ -45,12 +53,20 @@ class Provider extends Algorithms {
   }
 
   setAlgorithm(algorithm: Algorithm) {
+    this.generateArray();
+
     switch (algorithm) {
       case Algorithm.Bubble:
         this.setState({ currentAlgorithm: Algorithm.Bubble });
         return;
       case Algorithm.Merge:
         this.setState({ currentAlgorithm: Algorithm.Merge });
+        return;
+      case Algorithm.Quick:
+        this.setState({ currentAlgorithm: Algorithm.Quick });
+        return;
+      case Algorithm.Heap:
+        this.setState({ currentAlgorithm: Algorithm.Heap });
         return;
       default:
         this.setState({ currentAlgorithm: Algorithm.Bubble });
@@ -64,7 +80,7 @@ class Provider extends Algorithms {
         this.bubbleSort(this.state.currentArray);
         return;
       case Algorithm.Merge:
-        // this.bubbleSort(this.state.currentArray);
+        this.mergeSort(this.state.currentArray);
         return;
       default:
         this.bubbleSort(this.state.currentArray);
@@ -74,12 +90,14 @@ class Provider extends Algorithms {
 
   render() {
     const { children } = this.props;
-    const { currentArray } = this.state;
+    const { currentArray, currentAlgorithm } = this.state;
 
     return (
       <Context.Provider
         value={{
           currentArray,
+          currentAlgorithm,
+          setAlgorithm: this.setAlgorithm,
           runAlgorithm: this.runAlgorithm
         }}
       >

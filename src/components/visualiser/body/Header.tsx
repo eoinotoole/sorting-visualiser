@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Context, Algorithm } from "../../Context";
+import { Context, Algorithm, ContextStore } from "../../Context";
 import { themeVariable } from "../../style/helpers";
 import Button from "../../Button";
 
@@ -18,12 +18,12 @@ const generateAlgrorithmText = (algorithm: Algorithm) => {
 
 const Header: React.FunctionComponent = () => (
   <Context.Consumer>
-    {(context: any) => (
+    {(context: ContextStore) => (
       <Heady>
         <WordMark>Algorithm Visualiser</WordMark>
         <Container>
           <AlgorithmTitle>
-            <span>{generateAlgrorithmText(context.algorithm)}</span>
+            <span>{generateAlgrorithmText(context.currentAlgorithm)}</span>
           </AlgorithmTitle>
           <Buttons>
             <Button

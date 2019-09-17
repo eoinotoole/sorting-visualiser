@@ -2,26 +2,51 @@ import * as React from "react";
 import styled from "styled-components";
 
 import { themeVariable } from "../style/helpers";
+import { Context, Algorithm, ContextStore } from "../Context";
 
 class ControlPanel extends React.Component {
   render() {
     return (
-      <Panel>
-        <Top>
-          <Logomark>
-            <span>AV</span>
-          </Logomark>
-        </Top>
-        <Algorithms>
-          <h4>Algorithms</h4>
-          <List>
-            <Item active={true}>Bubble Sort</Item>
-            <Item active={false}>Merge Sort</Item>
-            <Item active={false}>Quick Sort</Item>
-            <Item active={false}>Heap Sort</Item>
-          </List>
-        </Algorithms>
-      </Panel>
+      <Context.Consumer>
+        {(context: ContextStore) => (
+          <Panel>
+            <Top>
+              <Logomark>
+                <span>AV</span>
+              </Logomark>
+            </Top>
+            <Algorithms>
+              <h4>Algorithms</h4>
+              <List>
+                <Item
+                  active={context.currentAlgorithm === Algorithm.Bubble}
+                  onClick={() => context.setAlgorithm(Algorithm.Bubble)}
+                >
+                  Bubble Sort
+                </Item>
+                <Item
+                  active={context.currentAlgorithm === Algorithm.Merge}
+                  onClick={() => context.setAlgorithm(Algorithm.Merge)}
+                >
+                  Merge Sort
+                </Item>
+                <Item
+                  active={context.currentAlgorithm === Algorithm.Quick}
+                  onClick={() => context.setAlgorithm(Algorithm.Quick)}
+                >
+                  Quick Sort
+                </Item>
+                <Item
+                  active={context.currentAlgorithm === Algorithm.Heap}
+                  onClick={() => context.setAlgorithm(Algorithm.Heap)}
+                >
+                  Heap Sort
+                </Item>
+              </List>
+            </Algorithms>
+          </Panel>
+        )}
+      </Context.Consumer>
     );
   }
 }
