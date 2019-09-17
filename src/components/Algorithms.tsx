@@ -18,7 +18,7 @@ class Algorithms extends React.Component<ProviderProps, ProviderState> {
           this.setState({ currentArray });
         }
       }
-      if (loop_again) loop();
+      if (loop_again) await loop();
     };
 
     await loop();

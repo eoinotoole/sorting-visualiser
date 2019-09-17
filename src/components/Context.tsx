@@ -10,6 +10,7 @@ export interface ProviderProps {
 export interface ProviderState {
   currentArray: number[] | [];
   currentAlgorithm: Algorithm;
+  running: boolean;
 }
 export enum Algorithm {
   Bubble = "BUBBLE",
@@ -20,6 +21,7 @@ export enum Algorithm {
 export interface ContextStore {
   currentArray: number[] | [];
   currentAlgorithm: Algorithm;
+  running: boolean;
   setAlgorithm: (algorithm: Algorithm) => void;
   runAlgorithm: () => void;
 }
@@ -29,7 +31,8 @@ class Provider extends Algorithms {
     super(props);
     this.state = {
       currentArray: [],
-      currentAlgorithm: Algorithm.Bubble
+      currentAlgorithm: Algorithm.Bubble,
+      running: false
     };
     this.generateArray = this.generateArray.bind(this);
     this.setAlgorithm = this.setAlgorithm.bind(this);
@@ -53,6 +56,8 @@ class Provider extends Algorithms {
   }
 
   setAlgorithm(algorithm: Algorithm) {
+    const { running } = this.state;
+    if (running) return;
     this.generateArray();
 
     switch (algorithm) {
@@ -74,29 +79,34 @@ class Provider extends Algorithms {
     }
   }
 
-  runAlgorithm() {
+  async runAlgorithm() {
+    this.setState({ running: true });
     switch (this.state.currentAlgorithm) {
       case Algorithm.Bubble:
-        this.bubbleSort(this.state.currentArray);
+        await this.bubbleSort(this.state.currentArray);
+        this.setState({ running: false });
         return;
       case Algorithm.Merge:
-        this.mergeSort(this.state.currentArray);
+        await this.mergeSort(this.state.currentArray);
+        this.setState({ running: false });
         return;
       default:
-        this.bubbleSort(this.state.currentArray);
+        await this.bubbleSort(this.state.currentArray);
+        this.setState({ running: false });
         return;
     }
   }
 
   render() {
     const { children } = this.props;
-    const { currentArray, currentAlgorithm } = this.state;
+    const { currentArray, currentAlgorithm, running } = this.state;
 
     return (
       <Context.Provider
         value={{
           currentArray,
           currentAlgorithm,
+          running,
           setAlgorithm: this.setAlgorithm,
           runAlgorithm: this.runAlgorithm
         }}

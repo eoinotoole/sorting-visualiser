@@ -29,7 +29,7 @@ const Header: React.FunctionComponent = () => (
             <Button
               text="Sort"
               colour="magenta"
-              onClick={context.runAlgorithm}
+              onClick={!context.running ? context.runAlgorithm : undefined}
             />
           </Buttons>
         </Container>
